@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 
-const databasePath = new URL('db.json', import.meta.url)
+const databasePath = new URL('tasksDb.json', import.meta.url)
 
 
 
@@ -56,16 +56,35 @@ export class Database {
             this.#database[table].splice(rowIndex, 1)
             this.#persist()
         }
-        throw new Error("ID NOT FOUND")
+        throw new Error("ID NOT FOUND!")
+    }
+    completeTask(table, id, data) {
+        const rowIndex = this.#database[table].findIndex(row => row.id === id)
+
+        if (rowIndex > -1) {
+            this.#database[table][rowIndex]["completed_at"] = data
+
+            this.#persist()
+        }
+
+        throw new Error("ID NOT FOUND!")
     }
     update(table, id, data) {
         const rowIndex = this.#database[table].findIndex(row => row.id === id)
-
         if (!rowIndex > -1) {
-            this.#database[table][rowIndex] = { id, ...data }
-        }
+            const valueDateBase = this.#database[table][rowIndex]
+            for (const keyChange in data) {
+                for (const keyDataBase in valueDateBase) {
+                    if (keyChange === keyDataBase & data[keyChange] !== undefined) {
+                        valueDateBase[keyDataBase] = data[keyChange]
+                    }
+                }
+            }
+            this.#database[table][rowIndex] = valueDateBase
 
-        throw new Error("ID NOT FOUND")
+            this.#persist()
+        }
+        throw new Error("ID NOT FOUND!")
     }
 
 }
