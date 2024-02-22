@@ -1,0 +1,14 @@
+{
+    "extends": [
+        "@rocketseat/eslint-config/node",
+        "prettier"
+    ],
+    "root": true,
+    "prettier/prettier": [
+        "error",
+        {},
+        {
+            "usePrettierrc": false
+        }
+    ]
+}
