@@ -1,13 +1,10 @@
-import fastify from 'fastify'
 
-const app = fastify()
+import { env } from './env'
+import { app } from './app'
 
-app.get('/hello', () => {
-  return 'Hello ABC'
-})
 app
   .listen({
-    port: 4444,
+    port: env.PORT,
   })
   .then(() => {
     console.log('HTTP Server Running')
