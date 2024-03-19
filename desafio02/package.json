@@ -1,0 +1,42 @@
+{
+  "name": "desafio02",
+  "version": "1.0.0",
+  "description": "- Deve ser possível criar um usuário\r - Deve ser possível identificar o usuário entre as requisições\r - Deve ser possível registrar uma refeição feita, com as seguintes informações:",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "knex": "node --no-warnings tsx ./node_modules/knex/bin/cli.js",
+    "lint": "eslint src --ext .ts --fix",
+    "test": "npx vitest",
+    "build": "tsup src --out-dir build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cookie": "^9.3.1",
+    "@types/bcryptjs": "^2.4.6",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.26.1",
+    "knex": "^3.1.0",
+    "pg": "^8.11.3",
+    "zod": "^3.22.4",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
+    "@types/node": "^20.11.19",
+    "@types/supertest": "^6.0.2",
+    "eslint": "^8.56.0",
+    "sqlite3": "^5.1.7",
+    "supertest": "^6.3.4",
+    "tsup": "^8.0.2",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.3.1",
+    "@types/jsonwebtoken": "^9.0.3",
+    "@types/cors": "^2.8.17"
+  }
+}

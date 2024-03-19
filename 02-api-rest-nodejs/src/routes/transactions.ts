@@ -29,7 +29,7 @@ async function transactionsRoutes(app: FastifyInstance) {
                 transactions,
             }
         })
-
+    // GET BY USER ID
     app.get('/:id',
         {
             preHandler: [checkSessionIdExists]
