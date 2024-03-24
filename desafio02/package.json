@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "knex": "node --no-warnings tsx ./node_modules/knex/bin/cli.js",
+    "knex": "node --loader tsx ./node_modules/knex/bin/cli.js",
     "lint": "eslint src --ext .ts --fix",
     "test": "npx vitest",
+    "knex:last":"node --loader tsx ./node_modules/knex/bin/cli.js",
     "build": "tsup src --out-dir build"
   },
   "keywords": [],

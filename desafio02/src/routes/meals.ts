@@ -17,7 +17,7 @@ async function mealsRoutes(app: FastifyInstance) {
         },
         async (req, res) => {
             const { sessionId } = req.cookies
-            const meals = await knex('meals')
+            const meals = await knex('meal')
                 .where('session_id', sessionId)
                 .select()
 
@@ -39,7 +39,7 @@ async function mealsRoutes(app: FastifyInstance) {
             })
             const { sessionId } = req.cookies
             const { title } = getMealParamsSchema.parse(req.params)
-            const meals = await knex('meals')
+            const meals = await knex('meal')
                 .where({
                     session_id: sessionId,
                     title
@@ -61,7 +61,7 @@ async function mealsRoutes(app: FastifyInstance) {
             })
             const { sessionId } = req.cookies
             const { id } = getMealParamsSchema.parse(req.params)
-            const meals = await knex('meals')
+            const meals = await knex('meal')
                 .where({
                     session_id: sessionId,
                     id
@@ -87,7 +87,7 @@ async function mealsRoutes(app: FastifyInstance) {
             const createMealBodySchema = z.object({
                 title: z.string(),
                 desc: z.string(),
-                on_diet: z.boolean()
+                on_diet: z.number()
             })
 
             const { title, desc, on_diet } = createMealBodySchema.parse(req.body)
@@ -106,7 +106,21 @@ async function mealsRoutes(app: FastifyInstance) {
 
         })
     // DELETE
+    app.delete('/delete/:id',
+        {
+            preHandler: [checkSessionIdExists]
+        },
+        async (req) => {
+            const getMealParamsSchema = z.object({
+                id: z.string().uuid()
 
+            })
+            const { id } = getMealParamsSchema.parse(req.params)
+            const deleteMeal = await knex('meal')
+                .where('id', id)
+                .delete()
+                .first()
+        })
 
     //SUMMARY
     app.get(
@@ -116,7 +130,7 @@ async function mealsRoutes(app: FastifyInstance) {
         },
         async (req) => {
             let sessionId = req.cookies.sessionId
-            const summary = await knex('meals')
+            const summary = await knex('meal')
                 .where('session_id', sessionId)
                 .sum('amount', { as: 'amount' })
                 .first()
