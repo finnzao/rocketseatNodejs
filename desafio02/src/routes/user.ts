@@ -16,13 +16,6 @@ async function userRoutes(app: FastifyInstance) {
             try {
                 const date = timeZone()
 
-                // if (!sessionId) {
-                //     sessionId = randomUUID()
-                //     res.cookie('sessionId', sessionId, {
-                //         path: '/',
-                //         maxAge: 60 * 60 * 24 * 7, // 7 days
-                //     })
-                // }
                 const createMealBodySchema = z.object({
                     username: z.string(),
                     email: z.string(),
@@ -33,7 +26,7 @@ async function userRoutes(app: FastifyInstance) {
                 const { username, email, password } = createMealBodySchema.parse(req.body)
                 const hashedPassword = await PasswordCrypto.hashPassword(password)
 
-                const userCreate = await knex('users')
+                await knex('users')
                     .insert({
                         id: randomUUID(),
                         username,
@@ -58,9 +51,9 @@ async function userRoutes(app: FastifyInstance) {
             })
 
             const { username, password } = loginSchema.parse(req.body)
-            const usernameExist = await knex('users').select('*').where('username', '=', username).first();
+            const userDate = await knex('users').select('*').where('username', '=', username).first();
 
-            const userDate = await knex('users').where('username', username).first()
+
             if (!userDate) {
                 return res.status(400).send({
                     errors: {
@@ -81,7 +74,7 @@ async function userRoutes(app: FastifyInstance) {
                 path: '/',
                 maxAge: 60 * 60 * 24 * 7, // 7 days
             })
-            res.status(201).send(userDate)
+            res.status(201).send()
         }
     )
 }
