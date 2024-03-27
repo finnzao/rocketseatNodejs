@@ -133,12 +133,17 @@ async function mealsRoutes(app: FastifyInstance) {
         },
         async (req) => {
             let sessionId = req.cookies.sessionId
-            const summary = await knex('meals')
-                .where('session_id', sessionId)
-                .sum('amount', { as: 'amount' })
-                .first()
-
-            return { summary }
+            const summaryOnDiet: string | number = await knex('meals')
+            .where('session_id', 123)
+            .where('on_diet', 1).count({ quantity: 'on_diet' })
+            const summaryAllMeals: string | number = await knex('meals')
+                .where('session_id', 123)
+                .count({ quantity: 'on_diet' })
+            const summaryNotOnDiet: string | number = await knex('meals')
+                .where('session_id', 123)
+                .where('on_diet', 0)
+                .count({ quantity: 'on_diet' })
+            return { summaryNotOnDiet }
         })
     //UPDATE
     app.post(
@@ -157,13 +162,13 @@ async function mealsRoutes(app: FastifyInstance) {
                 })
                 const getMealParamsSchema = z.object({
                     id: z.string().uuid()
-    
+
                 })
                 const { sessionId } = req.cookies
                 const { id } = getMealParamsSchema.parse(req.params)
                 const { title, desc, on_diet } = mealBodySchema.parse(req.body)
-               
-                
+
+
                 await knex('meals')
                     .where('id', id)
                     .update({
@@ -171,7 +176,7 @@ async function mealsRoutes(app: FastifyInstance) {
                         desc,
                         on_diet
                     })
-                    
+
                 res.status(204).send()
             } catch (error) {
                 res.status(400).send(error)

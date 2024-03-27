@@ -9,7 +9,7 @@ export async function sessionIdExists(sessionId: string | undefined) {
         }).first()
 
     if (!result) {
-        return undefined
+        return false
     }
     return true
 }
