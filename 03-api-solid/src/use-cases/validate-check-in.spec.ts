@@ -49,10 +49,10 @@ describe("Validate Check-In Use Case", () => {
 
     vi.advanceTimersByTime(1000 * 60 * 21); // 21 minutes in ms
 
-    await expect(() => {
+    await expect(() =>
       sut.handler({
         checkInId: createdCheckIn.id,
-      });
-    }).rejects.toBeInstanceOf(Error);
+      }),
+    ).rejects.toBeInstanceOf(Error);
   });
 });

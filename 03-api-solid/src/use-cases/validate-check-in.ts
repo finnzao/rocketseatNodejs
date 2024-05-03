@@ -1,8 +1,8 @@
 import { CheckIn } from "@prisma/client";
 import { CheckInsRepository } from "@/repositores/checkIn-repository";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
-import dayjs from "dayjs";
 import { LateCheckInValidationError } from "./errors/late-check-in-validation-error";
+import dayjs from "dayjs";
 
 interface ValidateCheckInRequest {
   checkInId: string;
@@ -33,6 +33,8 @@ export class ValidateCheckInUseCase {
     checkIn.validated_at = new Date();
 
     await this.checkInRepository.save(checkIn);
-    return { checkIn };
+    return {
+      checkIn,
+    };
   }
 }
