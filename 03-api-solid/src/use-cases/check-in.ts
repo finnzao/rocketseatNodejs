@@ -5,9 +5,10 @@ import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { getDistanceBetweenCoordinates } from "@/utils/get-distance-between-coordinates";
 import { MaxNumberOfCheckInError } from "./errors/max-number-of-check-in";
 import { MaxDistanceError } from "./errors/max-distance-error";
+
 interface CheckInRequest {
   userId: string;
-  gymdId: string;
+  gymId: string;
   userLatitude: number;
   userLongitude: number;
 }
@@ -24,11 +25,11 @@ export class CheckinUseCase {
 
   async handler({
     userId,
-    gymdId,
+    gymId,
     userLatitude,
     userLongitude,
   }: CheckInRequest): Promise<CheckInResponse> {
-    const gym = await this.gymsRepository.findById(gymdId);
+    const gym = await this.gymsRepository.findById(gymId);
     if (!gym) {
       throw new ResourceNotFoundError();
     }
@@ -57,7 +58,7 @@ export class CheckinUseCase {
       throw new MaxNumberOfCheckInError();
     }
     const checkIn = await this.checkInRepository.create({
-      gym_id: gymdId,
+      gym_id: gymId,
       user_id: userId,
     });
     return {

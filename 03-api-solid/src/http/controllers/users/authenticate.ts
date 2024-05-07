@@ -20,6 +20,7 @@ export async function authenticate(
       email,
       password,
     });
+    // request.user.sub
     const token = await reply.jwtSign({}, { sign: { sub: user.id } });
 
     return reply.status(200).send({

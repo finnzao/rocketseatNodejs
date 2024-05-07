@@ -6,5 +6,6 @@ export function makeCheckInUseCase() {
   const prismaUsersRepository = new PrismaCheckInsRepository();
   const gymsRepository = new PrismaGymsRepository();
   const userCase = new CheckinUseCase(prismaUsersRepository, gymsRepository);
+
   return userCase;
 }
