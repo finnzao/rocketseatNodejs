@@ -41,14 +41,13 @@ export class InMemoryUsersRepostitory implements UsersRepository {
     }
 
 
-    async findByName(name: string): Promise<User | null> {
-        const searchName = this.items.find((item) => item.name === name)
+    async findByName(query: string, page: number) {
+        return this.items
+            .filter((item) => item.name.includes(query))
+            .slice((page - 1) * 20, page * 20);
+    }
 
-        if (!searchName) {
-            return null
-        }
-
-
-        return searchName
+    async getAll(page: number) {
+        return this.items.slice((page - 1) * 20, page - 20)
     }
 }

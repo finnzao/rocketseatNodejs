@@ -10,7 +10,7 @@ interface GetUserProfileReponse {
 }
 export class GetUserProfileUseCase {
   constructor(private userRepository: UsersRepository) {}
-
+  
   async handler({
     userId,
   }: GetUserProfileRequest): Promise<GetUserProfileReponse> {
