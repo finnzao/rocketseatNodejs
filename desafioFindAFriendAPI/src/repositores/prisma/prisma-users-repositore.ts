@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client"
+import { Prisma, User } from "@prisma/client"
 
 import { UsersRepository } from "../users-repository";
 
@@ -10,7 +10,7 @@ export class PrismaUsersRepositore implements UsersRepository {
             where: {
                 id,
             },
-            
+
         });
 
         return user;
@@ -26,12 +26,21 @@ export class PrismaUsersRepositore implements UsersRepository {
         return user;
     }
 
+    async getAll(page: number = 1, pageSize: number = 20) {
+        const users = await prisma.user.findMany({
+            skip: (page - 1) * pageSize,
+            take: pageSize,
+        });
 
+        return users;
+    }
 
-    async findByName(name: string) {
-        const user = await prisma.user.findUnique({
+    async findByName(params: string, page: number) {
+        const user = await prisma.user.findMany({
             where: {
-                name,
+                name: {
+                    contains: params,
+                },
             }
         })
         return user;

@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod"
-import { makeRegisterUseCase } from "use-cases/factories/make-register-use-case";
+import {  } from "use-cases/factories/make-get-use-case";
 
 export async function getAll(request: FastifyRequest, reply: FastifyReply) {
 
