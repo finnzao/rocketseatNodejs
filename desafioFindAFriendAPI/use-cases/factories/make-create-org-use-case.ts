@@ -1,5 +1,5 @@
 import { PrismaUsersRepositore } from "@/repositores/prisma/prisma-pets-repositore";
-import { RegisterUseCase } from "../register";
+import { RegisterUseCase } from "../create-org";
 
 export function makeRegisterUseCase() {
   const prismaUsersRepository = new PrismaUsersRepositore();

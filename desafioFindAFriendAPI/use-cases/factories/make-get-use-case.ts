@@ -1,8 +1,10 @@
-import { PrismaUsersRepositore } from "@/repositores/prisma/prisma-users-repositore"
+import { PrismaUsersRepositore } from "@/repositores/prisma/prisma-pets-repositore"
 import { GetAllUsersUseCase } from "../get-all-pets"
 
 
 export function makeGetAllPetsUseCase() {
     const petsRepostiore = new PrismaUsersRepositore()
-    const userCase = new GetAllUsersUseCase(petsRepostiore);
+    const getAllUseCase = new GetAllUsersUseCase(petsRepostiore);
+
+    return getAllUseCase;
 }
