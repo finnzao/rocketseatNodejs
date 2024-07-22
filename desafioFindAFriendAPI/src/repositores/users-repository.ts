@@ -5,5 +5,5 @@ export interface UsersRepository {
     findById(id: string): Promise<User | null>;
     findByName(params: string, page: number): Promise<User[]>;
     getAll(page: number): Promise<User[]>;
-    create(data: Prisma.UserCreateInput): Promise<User>
+    create(data: Prisma.UserUncheckedCreateInput): Promise<User>
 }

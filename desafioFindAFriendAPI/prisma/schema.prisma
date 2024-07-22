@@ -17,8 +17,20 @@ model User {
   id     String @id @default(uuid())
   name   String
   owner  String
-  email  String
+  email  String @unique
   number String
+  org    Orgs   @relation(fields: [org_id], references: [id])
+  org_id String
 
   @@map("pets")
+}
+
+model Orgs {
+  id      String @id @default(uuid())
+  name    String
+  phone   String @unique
+  andress String @unique
+  User    User[]
+
+  @@map("orgs")
 }

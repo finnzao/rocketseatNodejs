@@ -7,6 +7,7 @@ interface RegisterUseCaseRequest {
     owner: string;
     number: string;
     email: string;
+    org_id: string;
 }
 
 interface RegisterUseCaseReponse {
@@ -20,18 +21,22 @@ export class RegisterUseCase {
         name,
         owner,
         number,
-        email
+        email,
+        org_id
+
     }: RegisterUseCaseRequest): Promise<RegisterUseCaseReponse> {
         const userWithSameEmail = await this.userRepository.findByEmail(email)
 
-        if(userWithSameEmail){
+        if (userWithSameEmail) {
             throw new Error("Email já existe")
         }
         const pet = await this.userRepository.create({
             name,
             owner,
             number,
-            email
+            email,
+            org_id,
+
         })
 
 

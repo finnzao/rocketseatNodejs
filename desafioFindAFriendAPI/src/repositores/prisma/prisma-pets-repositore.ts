@@ -19,13 +19,12 @@ export class PrismaUsersRepositore implements UsersRepository {
     async findByEmail(email: string) {
         const user = await prisma.user.findUnique({
             where: {
-                email,
-            },
-        });
-
-        return user;
+              email,
+            }
+          })
+      
+          return user
     }
-
     async getAll(page: number = 1, pageSize: number = 20) {
         const users = await prisma.user.findMany({
             skip: (page - 1) * pageSize,
@@ -48,7 +47,7 @@ export class PrismaUsersRepositore implements UsersRepository {
 
 
 
-    async create(data: Prisma.UserCreateInput) {
+    async create(data: Prisma.UserUncheckedCreateInput) {
         const user = await prisma.user.create({
             data,
         })
