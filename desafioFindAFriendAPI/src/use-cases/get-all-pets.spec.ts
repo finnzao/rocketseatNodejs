@@ -1,6 +1,7 @@
 import { expect, describe, it, beforeEach } from "vitest"
 import { GetAllUsersUseCase } from "./get-all-pets";
 import { InMemoryUsersRepostitory } from "@/repositores/in-memory/in-memory-users-repository";
+import { randomUUID } from "crypto";
 
 let userRepository: InMemoryUsersRepostitory;
 let sut: GetAllUsersUseCase;
@@ -19,7 +20,8 @@ describe("Get All Use Use Case", () => {
                 name: `Name${index}`,
                 number: `8199${index}34-0295`,
                 owner: `Andre ${index}`,
-                id: `pet-id-${index}`
+                id: `pet-id-${index}`,
+                org_id: randomUUID()
             })
         }
 
