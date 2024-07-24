@@ -1,33 +1,43 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma, User } from "@prisma/client"
+import { Orgs, Prisma } from "@prisma/client"
 
-import { UsersRepository } from "../users-repository";
+import { OrgsRepository } from "../orgs-repository";
 
-export class PrismaUsersRepositore implements UsersRepository {
+export class PrismaOrgRepositore implements OrgsRepository {
 
-    findByEmail(email: string): Promise<User | null> {
-        throw new Error("Method not implemented.");
-    }
-
-    findById(id: string): Promise<User | null> {
-        throw new Error("Method not implemented.");
-    }
-
-    findByName(params: string, page: number): Promise<User[]> {
-        throw new Error("Method not implemented.");
-    }
-
-    getAll(page: number): Promise<User[]> {
-        throw new Error("Method not implemented.");
-    }
-
-    async create(data: Prisma.UserCreateInput) {
-
-        const user = await prisma.user.create({
+    async create(data: Prisma.OrgsCreateInput) {
+        const org = await prisma.orgs.create({
             data,
+        });
+
+        return org
+    }
+    async findById(id: string) {
+        const orgId = await prisma.orgs.findUnique({
+            where: { id }
         })
 
-        return user
+        return orgId
     }
-    
+    async searchManyByTitle(query: string, page: number) {
+        const orgs = await prisma.orgs.findMany({
+            where: {
+                name: query
+            },
+            take: 20,
+            skip: (page - 1) * 20
+        })
+        return orgs
+    }
+    async findByNumber(phone: string) {
+        const org = await prisma.orgs.findUnique({
+            where: {
+                phone
+            }
+        })
+
+        return org
+    }
+
+
 }
