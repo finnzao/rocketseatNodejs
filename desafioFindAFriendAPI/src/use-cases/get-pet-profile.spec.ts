@@ -29,9 +29,8 @@ describe("Get All Use Use Case", () => {
         const { pets } = await sut.handler({
             page: 1
         })
-        console.log(pets)
-        // Pets será a quantidade de paginas
-        expect(pets).toHaveLength(4);
+
+        expect(pets).toHaveLength(4); // Isso será a quantidade paginas 
 
     })
 })

@@ -1,5 +1,4 @@
 import { UsersRepository } from "@/repositores/users-repository";
-import { hash } from "bcryptjs";
 import { User } from "@prisma/client";
 
 interface RegisterUseCaseRequest {
