@@ -1,9 +1,8 @@
 import { expect } from 'vitest'
 import { GetQuestionBySlugUseCase } from './get-question-by-slug'
 import { InMemoryQuestionsRepository } from 'test/repositores/in-memory-questions-repository'
+import { makeQuestion } from 'test/factories/make-question'
 import { Slug } from '../../enterprise/entities/value-objects/slug'
-import { Question } from '../../enterprise/entities/question'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 // system under test
@@ -15,11 +14,8 @@ describe('Get Question By slung', () => {
     })
 
     it('should be able to get a question by slug', async () => {
-        const newQuestion = Question.create({
-            title: "Example question",
-            slug: Slug.create("example-slug"),
-            authorId: new UniqueEntityID(),
-            content: "Example content"
+        const newQuestion = makeQuestion({
+            slug: Slug.create("example-slug")
         })
         inMemoryQuestionsRepository.create(newQuestion)
         const { question } = await sut.execute({
