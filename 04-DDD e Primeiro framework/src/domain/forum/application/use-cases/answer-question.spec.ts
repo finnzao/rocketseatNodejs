@@ -1,13 +1,13 @@
 import { expect } from 'vitest'
 import { AnswerQuestionOnUseCase } from './answer-question'
-import { InMemoryAnswerRepository } from 'test/repositores/in-memory-answers-repository'
+import { InMemoryAnswersRepository } from 'test/repositores/in-memory-answers-repository'
 
-let inMemoryAnswersRepository: InMemoryAnswerRepository
+let inMemoryAnswersRepository: InMemoryAnswersRepository
 // system under test
 let sut: AnswerQuestionOnUseCase
 describe('Create Answer ', () => {
   beforeEach(() => {
-    inMemoryAnswersRepository = new InMemoryAnswerRepository()
+    inMemoryAnswersRepository = new InMemoryAnswersRepository()
     sut = new AnswerQuestionOnUseCase(inMemoryAnswersRepository)
   })
 

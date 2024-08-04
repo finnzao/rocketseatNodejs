@@ -2,7 +2,7 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optiona'
 
-interface AnswerProps {
+export interface AnswerProps {
   authorId: UniqueEntityID
   questionId: UniqueEntityID
   content: string

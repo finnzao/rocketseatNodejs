@@ -1,24 +1,24 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { QuestionsRepository } from '../repositories/question-repository'
-import { Question } from '../../enterprise/entities/question'
+import { AnswersRepostiory } from '../repositories/answers-repository'
+import { Answer } from '../../enterprise/entities/answer'
 
-interface DeleteQuestionUseCaseRquest {
+interface DeleteAnswerUseCaseRquest {
     questionId: string
     authorId: string
 }
 
-interface DeleteQuestionUseCaseResponse { }
+interface DeleteAnswerUseCaseResponse { }
 
-export class DeleteQuestionOnUseCase {
-    constructor(private questionsRepository: QuestionsRepository) { }
+export class DeleteAnswerOnUseCase {
+    constructor(private questionsRepository: AnswersRepostiory) { }
     async execute({
         questionId,
         authorId
-    }: DeleteQuestionUseCaseRquest): Promise<DeleteQuestionUseCaseResponse> {
+    }: DeleteAnswerUseCaseRquest): Promise<DeleteAnswerUseCaseResponse> {
         const question = await this.questionsRepository.findById(questionId) // Return Objeto Question 
 
         if (!question) {
-            throw new Error('Question Not found')
+            throw new Error('Answer Not found')
         }
 
         if (authorId !== question.authorId.toString()) {

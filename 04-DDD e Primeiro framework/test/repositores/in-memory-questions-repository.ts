@@ -1,4 +1,4 @@
-import { QuestionsRepository } from '@/domain/forum/application/repositories/question-repostiry'
+import { QuestionsRepository } from '@/domain/forum/application/repositories/question-repository'
 import { Question } from '@/domain/forum/enterprise/entities/question'
 
 export class InMemoryQuestionsRepository implements QuestionsRepository {
@@ -18,6 +18,7 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     return question
 
   }
+  
   async delete(question: Question) {
     const itemIndex = this.items.findIndex((item) => item.id === question.id)
 
@@ -32,4 +33,11 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 
     return question
   }
+
+  async save(question: Question) {
+    const itemIndex = this.items.findIndex((item) => item.id === question.id)
+
+    this.items[itemIndex] = question
+  }
+
 }

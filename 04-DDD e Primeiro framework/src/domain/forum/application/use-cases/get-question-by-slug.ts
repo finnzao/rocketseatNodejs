@@ -1,4 +1,4 @@
-import { QuestionsRepository } from '../repositories/question-repostiry'
+import { QuestionsRepository } from '../repositories/question-repository'
 import { Question } from '../../enterprise/entities/question'
 
 interface GetQuestionBySlugUseCaseRequest {
