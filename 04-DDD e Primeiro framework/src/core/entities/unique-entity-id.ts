@@ -15,5 +15,3 @@ export class UniqueEntityID {
     this.value = value ?? randomUUID()
   }
 }
-
-console.log(new UniqueEntityID())
