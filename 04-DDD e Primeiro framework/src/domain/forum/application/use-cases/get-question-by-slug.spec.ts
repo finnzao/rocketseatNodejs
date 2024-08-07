@@ -1,6 +1,6 @@
 import { expect } from 'vitest'
 import { GetQuestionBySlugUseCase } from './get-question-by-slug'
-import { InMemoryQuestionsRepository } from 'test/repositores/in-memory-questions-repository'
+import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { makeQuestion } from 'test/factories/make-question'
 import { Slug } from '../../enterprise/entities/value-objects/slug'
 

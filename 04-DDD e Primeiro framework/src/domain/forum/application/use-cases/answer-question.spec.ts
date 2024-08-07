@@ -1,6 +1,6 @@
 import { expect } from 'vitest'
 import { AnswerQuestionOnUseCase } from './answer-question'
-import { InMemoryAnswersRepository } from 'test/repositores/in-memory-answers-repository'
+import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 // system under test

@@ -1,6 +1,6 @@
 import { expect } from 'vitest'
 import { DeleteQuestionOnUseCase } from './delete-question'
-import { InMemoryQuestionsRepository } from 'test/repositores/in-memory-questions-repository'
+import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { makeQuestion } from 'test/factories/make-question'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
