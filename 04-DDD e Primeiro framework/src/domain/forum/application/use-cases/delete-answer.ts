@@ -1,6 +1,6 @@
 import { AnswersRepository } from '../repositories/answers-repository'
 
-interface DeleteAnswerUseCaseRquest {
+interface DeleteAnswerUseCaseRequest {
     questionId: string
     authorId: string
 }
@@ -12,7 +12,7 @@ export class DeleteAnswerOnUseCase {
     async execute({
         questionId,
         authorId
-    }: DeleteAnswerUseCaseRquest): Promise<DeleteAnswerUseCaseResponse> {
+    }: DeleteAnswerUseCaseRequest): Promise<DeleteAnswerUseCaseResponse> {
         const question = await this.questionsRepository.findById(questionId) // Return Objeto Question 
 
         if (!question) {
