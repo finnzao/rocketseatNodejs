@@ -1,4 +1,4 @@
-import { AnswersRepostiory } from '../repositories/answers-repository'
+import { AnswersRepository } from '../repositories/answers-repository'
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 
 interface FetchQuestionAnswersUseCaseRequest {
@@ -11,7 +11,7 @@ interface FetchQuestionAnswersUseCaseResponse {
 }
 
 export class FetchQuestionAnswersUseCase {
-    constructor(private answersRepository: AnswersRepostiory) { }
+    constructor(private answersRepository: AnswersRepository) { }
 
     async execute({
         questionId,

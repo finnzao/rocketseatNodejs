@@ -1,8 +1,8 @@
-import { AnswersRepostiory } from "@/domain/forum/application/repositories/answers-repository";
+import { AnswersRepository } from "@/domain/forum/application/repositories/answers-repository";
 import { PaginationParams } from "@/domain/forum/application/repositories/pagination-params";
 import { Answer } from "@/domain/forum/enterprise/entities/answer"
 
-export class InMemoryAnswersRepository implements AnswersRepostiory {
+export class InMemoryAnswersRepository implements AnswersRepository {
     public items: Answer[] = []
 
     async findById(id: string) {

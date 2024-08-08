@@ -1,5 +1,5 @@
 import { Question } from '../../enterprise/entities/question'
-import { AnswersRepostiory } from '../repositories/answers-repository'
+import { AnswersRepository } from '../repositories/answers-repository'
 import { QuestionsRepository } from '../repositories/question-repository'
 
 interface ChosseQuestionBestAnswerUseCaseRequest {
@@ -13,7 +13,7 @@ interface ChosseQuestionBestAnswerUseCaseResponse {
 export class ChosseQuestionBestAnswerUseCase {
   constructor(
     private questionsRepository: QuestionsRepository,
-    private answersRepository: AnswersRepostiory,
+    private answersRepository: AnswersRepository,
   ) { }
 
   async execute({

@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { AnswersRepostiory } from '../repositories/answers-repository'
+import { AnswersRepository } from '../repositories/answers-repository'
 import { Answer } from '../../enterprise/entities/answer'
 
 interface DeleteAnswerUseCaseRquest {
@@ -10,7 +10,7 @@ interface DeleteAnswerUseCaseRquest {
 interface DeleteAnswerUseCaseResponse { }
 
 export class DeleteAnswerOnUseCase {
-    constructor(private questionsRepository: AnswersRepostiory) { }
+    constructor(private questionsRepository: AnswersRepository) { }
     async execute({
         questionId,
         authorId
