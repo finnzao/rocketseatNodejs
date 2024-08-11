@@ -50,7 +50,6 @@ describe('Fetch Question Answers', () => {
       questionId: 'question-1',
       page: 2,
     })
-    console.log(result.value?.answers)
     expect(result.value?.answers).toHaveLength(2)
   })
 })
