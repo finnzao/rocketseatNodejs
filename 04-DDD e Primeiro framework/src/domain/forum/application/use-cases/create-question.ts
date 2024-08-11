@@ -1,13 +1,15 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { QuestionsRepository } from '../repositories/question-repository'
 import { Question } from '../../enterprise/entities/question'
-import { ResourceNotFoundError } from '@/domain/forum/application/use-cases/errors/resource-not-found-error'
 import { Either, left, right } from '@/core/either'
+import { QuestionAttachment } from '@/core/entities/question-attachment'
 
 interface CreateQuestionUseCaseRquest {
   authorId: string
   title: string
   content: string
+  attachmentsIds: string[]
+
 }
 
 type CreateQuestionUseCaseResponse = Either<null, {
@@ -20,12 +22,22 @@ export class CreateQuestionOnUseCase {
     authorId,
     title,
     content,
+    attachmentsIds
   }: CreateQuestionUseCaseRquest): Promise<CreateQuestionUseCaseResponse> {
+
     const question = Question.create({
       authorId: new UniqueEntityID(authorId),
       title,
       content,
     })
+    const questionAttachments = attachmentsIds.map((attachmentId) => {
+      return QuestionAttachment.create({
+        attachmentId: new UniqueEntityID(attachmentId),
+        questionId: question.id,
+      })
+    })
+
+    question.attachments = questionAttachments
 
     await this.questionsRepository.create(question)
     return right({
