@@ -58,10 +58,8 @@ describe('watched list', () => {
 
     it('should be able to update watched list items', () => {
         const list = new NumberWatchedList([1, 2, 3])
-        console.log(list.getItems())
-        list.update([1, 3, 5])
 
-        console.log(list.getRemovedItems())
+        list.update([1, 3, 5])
         expect(list.getRemovedItems()).toEqual([2])
         expect(list.getNewItems()).toEqual([5])
     })
