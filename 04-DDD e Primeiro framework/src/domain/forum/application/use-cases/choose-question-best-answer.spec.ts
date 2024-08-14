@@ -1,62 +1,68 @@
-import { ChosseQuestionBestAnswerUseCase } from './choose-question-best-answer'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { makeAnswer } from 'test/factories/make-answer'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
+import { ChooseQuestionBestAnswerUseCase } from '@/domain/forum/application/use-cases/choose-question-best-answer'
 import { makeQuestion } from 'test/factories/make-question'
-import { NotAllowedError } from './errors/not-allowed-error'
+import { NotAllowedError } from '@/domain/forum/application/use-cases/errors/not-allowed-error'
+import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 
-let inMemoryAnswersRepository: InMemoryAnswersRepository
+let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
-let sut: ChosseQuestionBestAnswerUseCase
+let inMemoryAnswersRepository: InMemoryAnswersRepository
+let sut: ChooseQuestionBestAnswerUseCase
 
-describe('Edit Answer', () => {
+describe('Choose Question Best Answer', () => {
   beforeEach(() => {
-    inMemoryAnswersRepository = new InMemoryAnswersRepository()
-    inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
-
-    sut = new ChosseQuestionBestAnswerUseCase(
-      inMemoryQuestionsRepository,
-      inMemoryAnswersRepository
+    inMemoryAnswerAttachmentsRepository =
+      new InMemoryAnswerAttachmentsRepository()
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository()
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepository,
+    )
+    inMemoryAnswersRepository = new InMemoryAnswersRepository(
+      inMemoryAnswerAttachmentsRepository,
     )
 
+    sut = new ChooseQuestionBestAnswerUseCase(
+      inMemoryQuestionsRepository,
+      inMemoryAnswersRepository,
+    )
   })
 
-  it('should be able to chose the best answer and question', async () => {
+  it('should be able to choose the question best answer', async () => {
     const question = makeQuestion()
     const answer = makeAnswer({
-      questionId: question.id
+      questionId: question.id,
     })
-
-    await inMemoryAnswersRepository.create(answer)
     await inMemoryQuestionsRepository.create(question)
-
+    await inMemoryAnswersRepository.create(answer)
     await sut.execute({
-      authorId: answer.authorId.toString(),
-      answerId: answer.id.toString()
+      answerId: answer.id.toString(),
+      authorId: question.authorId.toString(),
     })
 
-    expect(inMemoryQuestionsRepository.items[0].bestAnswerId).toMatchObject(answer.id)
+    console.log(inMemoryQuestionsRepository.items[0])
+    expect(inMemoryQuestionsRepository.items[0].bestAnswerId).toEqual(answer.id)
   })
 
-  it('should not be able to chose the best answer and question', async () => {
+  it('should not be able to to choose another user question best answer', async () => {
     const question = makeQuestion({
-      authorId: new UniqueEntityID('author-1')
+      authorId: new UniqueEntityID('author-1'),
     })
     const answer = makeAnswer({
-      questionId: question.id
+      questionId: question.id,
     })
-
-    await inMemoryAnswersRepository.create(answer)
     await inMemoryQuestionsRepository.create(question)
-
+    await inMemoryAnswersRepository.create(answer)
     const result = await sut.execute({
       answerId: answer.id.toString(),
       authorId: 'author-2',
     })
-
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(NotAllowedError)
   })
-
 })
