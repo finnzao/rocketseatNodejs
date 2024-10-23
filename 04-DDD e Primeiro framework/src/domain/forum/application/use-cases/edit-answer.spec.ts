@@ -1,4 +1,4 @@
-import { DeleteAnswerUseCase } from './delete-answer'
+import { EditAnswerUseCase } from './edit-answer'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 import { makeAnswer } from 'test/factories/make-answer'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
@@ -8,9 +8,9 @@ import { makeAnswerAttachment } from 'test/factories/make-answer-attachments'
 
 let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let inMemoryAnswersRepository: InMemoryAnswersRepository
-let sut: DeleteAnswerUseCase
+let sut: EditAnswerUseCase
 
-describe('Delete Answer', () => {
+describe('Edit Answer', () => {
   beforeEach(() => {
     inMemoryAnswerAttachmentsRepository =
       new InMemoryAnswerAttachmentsRepository()
@@ -18,10 +18,13 @@ describe('Delete Answer', () => {
       inMemoryAnswerAttachmentsRepository,
     )
 
-    sut = new DeleteAnswerUseCase(inMemoryAnswersRepository)
+    sut = new EditAnswerUseCase(
+      inMemoryAnswersRepository,
+      inMemoryAnswerAttachmentsRepository,
+    )
   })
 
-  it('should be able to delete a answer', async () => {
+  it('should be able to edit a answer', async () => {
     const newAnswer = makeAnswer(
       {
         authorId: new UniqueEntityID('author-1'),
@@ -43,15 +46,28 @@ describe('Delete Answer', () => {
     )
 
     await sut.execute({
-      answerId: 'answer-1',
+      answerId: newAnswer.id.toValue(),
       authorId: 'author-1',
+      content: 'Conteúdo teste',
+      attachmentsIds: ['1', '3'],
     })
 
-    expect(inMemoryAnswersRepository.items).toHaveLength(0)
-    expect(inMemoryAnswerAttachmentsRepository.items).toHaveLength(0)
+    expect(inMemoryAnswersRepository.items[0]).toMatchObject({
+      content: 'Conteúdo teste',
+    })
+
+    expect(
+      inMemoryAnswersRepository.items[0].attachments.currentItems,
+    ).toHaveLength(2)
+    expect(inMemoryAnswersRepository.items[0].attachments.currentItems).toEqual(
+      [
+        expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
+        expect.objectContaining({ attachmentId: new UniqueEntityID('3') }),
+      ],
+    )
   })
 
-  it('should not be able to delete a answer from another user', async () => {
+  it('should not be able to edit a answer from another user', async () => {
     const newAnswer = makeAnswer(
       {
         authorId: new UniqueEntityID('author-1'),
@@ -62,8 +78,10 @@ describe('Delete Answer', () => {
     await inMemoryAnswersRepository.create(newAnswer)
 
     const result = await sut.execute({
-      answerId: 'answer-1',
+      answerId: newAnswer.id.toValue(),
       authorId: 'author-2',
+      content: 'Conteúdo teste',
+      attachmentsIds: [],
     })
 
     expect(result.isLeft()).toBe(true)

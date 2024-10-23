@@ -1,22 +1,27 @@
-import { expect } from 'vitest'
-import { CreateQuestionOnUseCase } from './create-question'
-import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { CreateQuestionUseCase } from './create-question'
+import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
-// system under test
-let sut: CreateQuestionOnUseCase
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
+let sut: CreateQuestionUseCase
+
 describe('Create Question', () => {
   beforeEach(() => {
-    inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
-    sut = new CreateQuestionOnUseCase(inMemoryQuestionsRepository)
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository()
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepository,
+    )
+    sut = new CreateQuestionUseCase(inMemoryQuestionsRepository)
   })
 
-  it('should be able to create an answer', async () => {
+  it('should be able to create a question', async () => {
     const result = await sut.execute({
       authorId: '1',
-      content: 'Nova pergunta',
-      title: 'Titulo',
+      title: 'Nova pergunta',
+      content: 'Conteúdo da pergunta',
       attachmentsIds: ['1', '2'],
     })
 

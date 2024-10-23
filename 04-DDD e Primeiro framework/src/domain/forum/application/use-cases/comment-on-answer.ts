@@ -2,9 +2,8 @@ import { AnswersRepository } from '../repositories/answers-repository'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { AnswerComment } from '@/domain/forum/enterprise/entities/answer-comment'
 import { AnswerCommentsRepository } from '@/domain/forum/application/repositories/answer-comments-repository'
-import { NotAllowedError } from '@/domain/forum/application/use-cases/errors/not-allowed-error'
-import { ResourceNotFoundError } from '@/domain/forum/application/use-cases/errors/resource-not-found-error'
 import { Either, left, right } from '@/core/either'
+import { ResourceNotFoundError } from '@/domain/forum/application/use-cases/errors/resource-not-found-error'
 
 interface CommentOnAnswerUseCaseRequest {
   authorId: string
@@ -13,7 +12,8 @@ interface CommentOnAnswerUseCaseRequest {
 }
 
 type CommentOnAnswerUseCaseResponse = Either<
-  ResourceNotFoundError, {
+  ResourceNotFoundError,
+  {
     answerComment: AnswerComment
   }
 >
@@ -22,7 +22,7 @@ export class CommentOnAnswerUseCase {
   constructor(
     private answersRepository: AnswersRepository,
     private answerCommentsRepository: AnswerCommentsRepository,
-  ) { }
+  ) {}
 
   async execute({
     authorId,
