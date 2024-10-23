@@ -18,10 +18,15 @@ type AnswerQuestionUseCaseResponse = Either<
     answer: Answer
   }
 >
+<<<<<<< HEAD
 
 export class AnswerQuestionUseCase {
   constructor(private answersRepository: AnswersRepository) {}
 
+=======
+export class AnswerQuestionUseCase {
+  constructor(private answersRepository: AnswersRepository) {}
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec
   async execute({
     instructorId,
     questionId,

@@ -4,7 +4,6 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
 import { QuestionAttachmentList } from './question-attachment-list'
-
 export interface QuestionProps {
   authorId: UniqueEntityID
   bestAnswerId?: UniqueEntityID
@@ -15,28 +14,22 @@ export interface QuestionProps {
   createdAt: Date
   updatedAt?: Date
 }
-
 export class Question extends AggregateRoot<QuestionProps> {
   get authorId() {
     return this.props.authorId
   }
-
   get bestAnswerId() {
     return this.props.bestAnswerId
   }
-
   get title() {
     return this.props.title
   }
-
   get content() {
     return this.props.content
   }
-
   get slug() {
     return this.props.slug
   }
-
   get attachments() {
     return this.props.attachments
   }
@@ -44,30 +37,24 @@ export class Question extends AggregateRoot<QuestionProps> {
   get createdAt() {
     return this.props.createdAt
   }
-
   get updatedAt() {
     return this.props.updatedAt
   }
-
   get isNew(): boolean {
     return dayjs().diff(this.createdAt, 'days') <= 3
   }
-
   get excerpt() {
     return this.content.substring(0, 120).trimEnd().concat('...')
   }
-
   private touch() {
     this.props.updatedAt = new Date()
   }
-
   set title(title: string) {
     this.props.title = title
     this.props.slug = Slug.createFromText(title)
 
     this.touch()
   }
-
   set content(content: string) {
     this.props.content = content
     this.touch()
@@ -75,6 +62,7 @@ export class Question extends AggregateRoot<QuestionProps> {
 
   set attachments(attachments: QuestionAttachmentList) {
     this.props.attachments = attachments
+<<<<<<< HEAD
     this.touch()
   }
 
@@ -83,6 +71,15 @@ export class Question extends AggregateRoot<QuestionProps> {
     this.touch()
   }
 
+=======
+    this.touch()
+  }
+
+  set bestAnswerId(bestAnswerId: UniqueEntityID | undefined) {
+    this.props.bestAnswerId = bestAnswerId
+    this.touch()
+  }
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec
   static create(
     props: Optional<QuestionProps, 'createdAt' | 'slug' | 'attachments'>,
     id?: UniqueEntityID,
@@ -96,7 +93,6 @@ export class Question extends AggregateRoot<QuestionProps> {
       },
       id,
     )
-
     return question
   }
 }

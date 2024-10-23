@@ -39,15 +39,24 @@ describe('Choose Question Best Answer', () => {
     const answer = makeAnswer({
       questionId: question.id,
     })
+<<<<<<< HEAD
 
     await inMemoryQuestionsRepository.create(question)
     await inMemoryAnswersRepository.create(answer)
 
+=======
+    await inMemoryQuestionsRepository.create(question)
+    await inMemoryAnswersRepository.create(answer)
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec
     await sut.execute({
       answerId: answer.id.toString(),
       authorId: question.authorId.toString(),
     })
 
+<<<<<<< HEAD
+=======
+    console.log(inMemoryQuestionsRepository.items[0])
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec
     expect(inMemoryQuestionsRepository.items[0].bestAnswerId).toEqual(answer.id)
   })
 
@@ -55,6 +64,7 @@ describe('Choose Question Best Answer', () => {
     const question = makeQuestion({
       authorId: new UniqueEntityID('author-1'),
     })
+<<<<<<< HEAD
 
     const answer = makeAnswer({
       questionId: question.id,
@@ -63,12 +73,22 @@ describe('Choose Question Best Answer', () => {
     await inMemoryQuestionsRepository.create(question)
     await inMemoryAnswersRepository.create(answer)
 
+=======
+    const answer = makeAnswer({
+      questionId: question.id,
+    })
+    await inMemoryQuestionsRepository.create(question)
+    await inMemoryAnswersRepository.create(answer)
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec
     const result = await sut.execute({
       answerId: answer.id.toString(),
       authorId: 'author-2',
     })
-
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(NotAllowedError)
   })
+<<<<<<< HEAD
 })
+=======
+})
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec

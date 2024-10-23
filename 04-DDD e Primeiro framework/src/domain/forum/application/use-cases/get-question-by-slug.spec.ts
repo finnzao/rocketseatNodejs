@@ -21,6 +21,7 @@ describe('Get Question By Slug', () => {
   it('should be able to get a question by slug', async () => {
     const newQuestion = makeQuestion({
       slug: Slug.create('example-question'),
+<<<<<<< HEAD
     })
 
     await inMemoryQuestionsRepository.create(newQuestion)
@@ -36,3 +37,18 @@ describe('Get Question By Slug', () => {
     })
   })
 })
+=======
+    })
+    await inMemoryQuestionsRepository.create(newQuestion)
+    const result = await sut.execute({
+      slug: 'example-question',
+    })
+
+    expect(result.value).toMatchObject({
+      question: expect.objectContaining({
+        title: newQuestion.title,
+      }),
+    })
+  })
+})
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec

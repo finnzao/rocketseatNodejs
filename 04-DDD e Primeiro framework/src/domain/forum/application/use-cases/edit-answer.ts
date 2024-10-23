@@ -26,7 +26,11 @@ export class EditAnswerUseCase {
   constructor(
     private answersRepository: AnswersRepository,
     private answerAttachmentsRepository: AnswerAttachmentsRepository,
+<<<<<<< HEAD
   ) {}
+=======
+  ) { }
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec
 
   async execute({
     authorId,
@@ -39,7 +43,6 @@ export class EditAnswerUseCase {
     if (!answer) {
       return left(new ResourceNotFoundError())
     }
-
     if (authorId !== answer.authorId.toString()) {
       return left(new NotAllowedError())
     }
@@ -64,7 +67,6 @@ export class EditAnswerUseCase {
     answer.content = content
 
     await this.answersRepository.save(answer)
-
     return right({
       answer,
     })

@@ -30,6 +30,7 @@ describe('Delete Answer', () => {
     )
 
     await inMemoryAnswersRepository.create(newAnswer)
+<<<<<<< HEAD
 
     inMemoryAnswerAttachmentsRepository.items.push(
       makeAnswerAttachment({
@@ -60,13 +61,46 @@ describe('Delete Answer', () => {
     )
 
     await inMemoryAnswersRepository.create(newAnswer)
+=======
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec
 
+    inMemoryAnswerAttachmentsRepository.items.push(
+      makeAnswerAttachment({
+        answerId: newAnswer.id,
+        attachmentId: new UniqueEntityID('1'),
+      }),
+      makeAnswerAttachment({
+        answerId: newAnswer.id,
+        attachmentId: new UniqueEntityID('2'),
+      }),
+    )
+
+    await sut.execute({
+      answerId: 'answer-1',
+      authorId: 'author-1',
+    })
+
+    expect(inMemoryAnswersRepository.items).toHaveLength(0)
+    expect(inMemoryAnswerAttachmentsRepository.items).toHaveLength(0)
+  })
+
+  it('should not be able to delete a answer from another user', async () => {
+    const newAnswer = makeAnswer(
+      {
+        authorId: new UniqueEntityID('author-1'),
+      },
+      new UniqueEntityID('answer-1'),
+    )
+    await inMemoryAnswersRepository.create(newAnswer)
     const result = await sut.execute({
       answerId: 'answer-1',
       authorId: 'author-2',
     })
-
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(NotAllowedError)
   })
+<<<<<<< HEAD
 })
+=======
+})
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec

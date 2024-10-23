@@ -8,6 +8,7 @@ let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let sut: FetchRecentQuestionsUseCase
 
 describe('Fetch Recent Questions', () => {
+<<<<<<< HEAD
   beforeEach(() => {
     inMemoryQuestionAttachmentsRepository =
       new InMemoryQuestionAttachmentsRepository()
@@ -30,6 +31,15 @@ describe('Fetch Recent Questions', () => {
 
     const result = await sut.execute({
       page: 1,
+=======
+    beforeEach(() => {
+        inMemoryQuestionAttachmentsRepository =
+        new InMemoryQuestionAttachmentsRepository()
+      inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+        inMemoryQuestionAttachmentsRepository,
+      )
+        sut = new FetchRecentQuestionsUseCase(inMemoryQuestionsRepository)
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec
     })
 
     expect(result.value?.questions).toEqual([

@@ -7,6 +7,7 @@ import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory
 let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 let sut: FetchQuestionAnswersUseCase
+let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 
 describe('Fetch Question Answers', () => {
   beforeEach(() => {

@@ -74,9 +74,13 @@ describe('Edit Answer', () => {
       },
       new UniqueEntityID('answer-1'),
     )
+<<<<<<< HEAD
 
     await inMemoryAnswersRepository.create(newAnswer)
 
+=======
+    await inMemoryAnswersRepository.create(newAnswer)
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec
     const result = await sut.execute({
       answerId: newAnswer.id.toValue(),
       authorId: 'author-2',
@@ -87,4 +91,8 @@ describe('Edit Answer', () => {
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(NotAllowedError)
   })
+<<<<<<< HEAD
 })
+=======
+})
+>>>>>>> e298bdf7c698025df5ca4395ad50ebf7d47b97ec
