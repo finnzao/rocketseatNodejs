@@ -23,14 +23,18 @@ describe('Comment on Answer', () => {
       inMemoryAnswerCommentsRepository,
     )
   })
+
   it('should be able to comment on answer', async () => {
     const answer = makeAnswer()
+
     await inMemoryAnswersRepository.create(answer)
+
     await sut.execute({
       answerId: answer.id.toString(),
       authorId: answer.authorId.toString(),
       content: 'Comentário teste',
     })
+
     expect(inMemoryAnswerCommentsRepository.items[0].content).toEqual(
       'Comentário teste',
     )
