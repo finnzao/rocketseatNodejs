@@ -25,7 +25,7 @@ describe('domain events', () => {
     it('should be able to dispatch and listen to events', async () => {
         // fn: função vazio que retorna se ela foi chamada ou não
         const callbackSpy = vi.fn()
-        // callbackSpy será invocado somente quando um CustomAggregateCreated ocorrer.
+        // a função callbackSpy será associado ao evento CustomAggregateCreated.
         DomainEvents.register(callbackSpy, CustomAggregateCreated.name)
         DomainEvents.register(() => { console.log("disparou") }
             , CustomAggregateCreated.name
@@ -36,7 +36,7 @@ describe('domain events', () => {
         expect(aggregate.domainEvents).toHaveLength(1);
 
         DomainEvents.dispatchEventsForAggregate(aggregate.id)
-
+        // O subscriber ouve o evento e faz o que precisa ser feito com o dado
         expect(callbackSpy).toHaveBeenCalled()
     })
 })
