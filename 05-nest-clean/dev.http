@@ -3,3 +3,13 @@ GET http://localhost:3000/api/hello
 ###
 POST http://localhost:3000/api/hello
 
+####
+POST http://localhost:3000/accounts
+Content-Type: application/json
+
+{
+  "name": "Teste",
+  "email": "1231",
+  "password": "314"
+}
+

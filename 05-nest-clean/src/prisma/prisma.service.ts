@@ -4,18 +4,19 @@ import { PrismaClient } from '@prisma/client';
 @Injectable()
 export class PrismaService
   extends PrismaClient
-  implements OnModuleDestroy, OnModuleInit
+  implements OnModuleInit, OnModuleDestroy
 {
-  public client: PrismaClient;
-
   constructor() {
-    // super para chamar a classe extentida
-    super();
+    super({
+      log: ['warn', 'error'],
+    });
   }
-  onModuleDestroy() {
-    return this.$disconnect();
-  }
+
   onModuleInit() {
     return this.$connect();
+  }
+
+  onModuleDestroy() {
+    return this.$disconnect();
   }
 }
